@@ -26,29 +26,36 @@ document.addEventListener("DOMContentLoaded", () => {
 				textElement.style.setProperty("--clip-value", `${clipValue}%`);
 			},
 		});
+	});
+	ScrollTrigger.create({
+		trigger: ".services",
+		start: "top bottom",
+		end: "top top",
+		scrub: 1,
+		onUpdate: (self) => {
+			const headers = document.querySelectorAll(".services-header");
+			gsap.set(headers[0], {x: `${100 - self.progress * 100}%`});
+			gsap.set(headers[1], {x: `${-100 + self.progress * 100}%`});
+			gsap.set(headers[2], {x: `${100 - self.progress * 100}%`});
+		},
+	});
 
-		ScrollTrigger.create({
-			trigger: ".services",
-			start: "top bottom",
-			end: "top top",
-			scrub: 1,
-			onUpdate: (self) => {
-				const headers = document.querySelectorAll(".services-header");
-				gsap.set(headers[0], {x: `${100 - self.progress * 100}%`});
-				gsap.set(headers[1], {x: `${-100 + self.progress * 100}%`});
-				gsap.set(headers[2], {x: `${100 - self.progress * 100}%`});
-			},
-		});
+	ScrollTrigger.create({
+		trigger: ".services",
+		start: "top top",
+		end: `+=${window.innerHeight * 2}`,
+		pin: true,
+		scrub: 1,
+		pinSpacing: false,
+		onUpdate: (self) => {
+			const headers = document.querySelectorAll(".services-header");
+			console.log(headers);
 
-		ScrollTrigger.create({
-			trigger: ".services",
-			start: "top top",
-			end: `+=${window.innerHeight * 2}`,
-			pin: true,
-			pinSpacing: false,
-			onUpdate: (self) => {
-				console.log(self);
-			},
-		});
+			if (self.progress <= 0.5) {
+				console.log("1");
+			} else {
+				console.log("2");
+			}
+		},
 	});
 });
