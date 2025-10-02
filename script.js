@@ -52,9 +52,20 @@ document.addEventListener("DOMContentLoaded", () => {
 			console.log(headers);
 
 			if (self.progress <= 0.5) {
-				console.log("1");
+				const yProgress = self.progress * 2;
+				console.log(self.progress);
+				console.log(yProgress);
+				gsap.set(headers[0], {y: `${yProgress * 100}%`});
+				gsap.set(headers[2], {y: `-${yProgress * 100}%`});
 			} else {
-				console.log("2");
+				gsap.set(headers[0], {y: `100%`});
+				gsap.set(headers[2], {y: `-100%`});
+
+				const scaleProgress = (self.progress - 0.5) * 2;
+				const minScale = window.innerWidth <= 1000 ? 0.6 : 0.3;
+				const scale = 1 - scaleProgress * (1 - minScale);
+
+				headers.forEach((header) => gsap.set(header, {scale}));
 			}
 		},
 	});
